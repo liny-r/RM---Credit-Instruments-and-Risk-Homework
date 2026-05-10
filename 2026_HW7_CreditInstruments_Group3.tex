@@ -1,0 +1,468 @@
+\documentclass{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[
+    left=0.6in,
+    right=0.6in,
+    top=0.6in,
+    bottom=0.6in
+]{geometry}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\linespread{0.96}
+
+\title{RM -- Credit Instruments and Risk Homework}
+\author{Yueqi Lin, Yajie Zhang, Mat Zaga}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Exercise 1}
+
+\textbf{Consider a corporate bond:}
+\begin{itemize}
+    \item with notional $N$ (compare to \$1 in the lecture notes);
+    \item issued by a firm with constant default intensity $\lambda$ (not a function of time);
+    \item final maturity $T$, at which the notional is returned to the bond holders;
+    \item constant continuous coupon $c$, i.e. in any time interval $[t, t+dt]$, where $t < T$, the bond holders are paid $N \cdot c \cdot dt$ as long as there is no default prior to $t$;
+    \item recovery rate $R$, i.e. at the time of default (if before $T$), the bond holders receive $N \cdot R$.
+\end{itemize}
+
+Assume the risk-free rate is constant at $r > 0$.
+
+\begin{align*}
+\mathbb{P}(\tau > t) &= e^{-\lambda t}, \\
+\mathbb{P}(\tau \in dt) &= \lambda e^{-\lambda t} dt
+\end{align*}
+
+%--------------------------------------------------
+
+\section*{Case 1: $R = c = 0$}
+
+\textbf{Question:} What is the bond value at $t = 0$?
+
+\vspace{4pt}
+
+\textbf{Solution:}
+
+\begin{align*}
+V_0 &= N e^{-rT} \mathbb{P}(\tau > T) \\
+    &= N e^{-rT} e^{-\lambda T} \\
+    &= N e^{-(r+\lambda)T}
+\end{align*}
+
+\[
+\boxed{V_0 = N e^{-(r+\lambda)T}}
+\]
+
+%--------------------------------------------------
+
+\section*{Case 2: $R = 0,\ c \neq 0$}
+
+\textbf{Question:}
+\begin{itemize}
+    \item[(a)] What is the value of the coupon stream at $t = 0$?
+    \item[(b)] What is the total value of the bond at $t = 0$?
+    \item[(c)] What is the limit of the initial bond value as $T \to \infty$?
+    \item[(d)] At which value of $c$ is the initial bond value equal to $N$ (par coupon)?
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Solution:}
+
+\textbf{(a) Coupon value}
+
+\begin{align*}
+V_{\text{coupon}}
+&= \int_0^T Nc \, e^{-rt} \mathbb{P}(\tau > t)\, dt \\
+&= Nc \int_0^T e^{-rt} e^{-\lambda t} dt \\
+&= Nc \int_0^T e^{-(r+\lambda)t} dt \\
+&= \frac{Nc}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
+\end{align*}
+
+\textbf{(b) Total value}
+
+\begin{align*}
+V_0
+&= V_{\text{coupon}} + V_{\text{notional}} \\
+&= \frac{Nc}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ N e^{-(r+\lambda)T}
+\end{align*}
+
+\[
+\boxed{
+V_0 =
+\frac{Nc}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ N e^{-(r+\lambda)T}
+}
+\]
+
+\textbf{(c) Limit as $T \to \infty$}
+
+\[
+\boxed{
+\lim_{T \to \infty} V_0 = \frac{Nc}{r+\lambda}
+}
+\]
+
+\textbf{(d) Par coupon}
+
+\begin{align*}
+1
+&= \frac{c}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ e^{-(r+\lambda)T}
+\end{align*}
+
+\[
+\boxed{c = r + \lambda}
+\]
+
+%--------------------------------------------------
+
+\section*{Case 3: $R \neq 0,\ c \neq 0$}
+
+\textbf{Question:}
+\begin{itemize}
+    \item[(a)] What is the value of the recovery component at $t = 0$?
+    \item[(b)] What is the total value of the bond at $t = 0$?
+    \item[(c)] What is the limit of the initial bond value as $T \to \infty$?
+    \item[(d)] At which value of $c$ is the initial bond value equal to $N$ (par coupon)?
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Solution:}
+
+\textbf{(a) Recovery value}
+
+\begin{align*}
+V_{\text{recovery}}
+&= \int_0^T NR \, e^{-rt} \lambda e^{-\lambda t} dt \\
+&= NR \lambda \int_0^T e^{-(r+\lambda)t} dt \\
+&= \frac{NR\lambda}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
+\end{align*}
+
+\textbf{(b) Total value}
+
+\begin{align*}
+V_0
+&= V_{\text{coupon}} + V_{\text{notional}} + V_{\text{recovery}} \\
+&= \frac{N(c + R\lambda)}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ N e^{-(r+\lambda)T}
+\end{align*}
+
+\[
+\boxed{
+V_0 =
+\frac{N(c + R\lambda)}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ N e^{-(r+\lambda)T}
+}
+\]
+
+\textbf{(c) Limit as $T \to \infty$}
+
+\[
+\boxed{
+\lim_{T \to \infty} V_0 = \frac{N(c + R\lambda)}{r+\lambda}
+}
+\]
+
+\textbf{(d) Par coupon}
+
+\begin{align*}
+1
+&= \frac{c + R\lambda}{r+\lambda}\left(1 - e^{-(r+\lambda)T}\right)
++ e^{-(r+\lambda)T}
+\end{align*}
+
+\[
+\boxed{c = r + \lambda(1 - R)}
+\]
+
+%==================================================
+
+\newpage
+
+%--------------------------------------------------
+
+\section{Exercise 2}
+
+\textbf{Consider a CDS contract. Recall from the lecture notes that its par spread is the coupon rate that makes the value of the CDS equal to zero at initiation.}
+
+When $\lambda$ is roughly constant in time, the CDS par spread is approximated by
+
+\[
+\boxed{c_{\mathrm{par}} \approx \lambda(1-R)}
+\]
+
+\begin{itemize}
+    \item[(a)] Show that the approximation works for the bond described in Exercise 1.
+    \item[(b)] Provide intuition for why this relationship makes sense.
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Solution:}
+
+\subsection*{(a) Derivation}
+
+The lecture notes define the risky discount factor with survival embedded into it:
+
+\[
+B(0,T)=\mathbb{E}\left[e^{-\int_0^T (r(u)+\lambda(u))du}\right]
+\]
+
+The CDS protection leg with recovery rate $R$ is
+
+\[
+C(0;1-R)
+=
+(1-R)
+\mathbb{E}
+\left[
+\int_0^T
+\lambda(s)
+ e^{-\int_0^s (r(u)+\lambda(u))du}
+ ds
+\right]
+\]
+
+Assuming default intensity is approximately constant, $\lambda(s)\approx \lambda$, we can pull it outside the integral:
+
+\begin{align*}
+C(0;1-R)
+&\approx
+(1-R)\lambda
+\int_0^T
+\mathbb{E}
+\left[
+ e^{-\int_0^s (r(u)+\lambda(u))du}
+\right] ds \\
+&=
+(1-R)\lambda
+\int_0^T B(0,s)ds
+\end{align*}
+
+The premium leg of the CDS is approximately
+
+\[
+\sum_{i=1}^N \delta_i B(0,T_i)
+\approx
+\int_0^T B(0,s)ds
+\]
+
+The CDS par spread is obtained by equating protection and premium legs:
+
+\[
+c_{\mathrm{par}}
+=
+\frac{C(0;1-R)}{\sum_i \delta_i B(0,T_i)}
+\]
+
+Substituting the above approximations:
+
+\begin{align*}
+c_{\mathrm{par}}
+&\approx
+\frac{(1-R)\lambda\int_0^T B(0,s)ds}
+{\int_0^T B(0,s)ds} \\
+&=
+\lambda(1-R)
+\end{align*}
+
+Hence,
+
+\[
+\boxed{c_{\mathrm{par}} \approx \lambda(1-R)}
+\]
+
+This matches the result implied by Exercise 1. In Case 3, the par coupon for a risky bond is
+
+\[
+\boxed{c = r + \lambda(1-R)}
+\]
+
+Therefore, the excess spread over the risk-free rate is
+
+\[
+c-r = \lambda(1-R)
+\]
+
+which is exactly the CDS par spread approximation.
+
+\subsection*{(b) Intuition}
+
+\textbf{Par spread = expected loss rate.}
+
+Over a short interval $dt$:
+
+\[
+\mathbb{P}(\text{default in }dt) \approx \lambda dt
+\]
+
+and the loss given default is
+
+\[
+1-R
+\]
+
+Therefore, the expected loss per unit time is approximately
+
+\[
+\lambda(1-R)
+\]
+
+The CDS premium is a continuous insurance payment against this expected loss. For the CDS to have zero value at initiation, the premium paid by the protection buyer must equal the expected loss paid by the protection seller.
+
+Hence the fair CDS spread is approximately
+
+\[
+\boxed{c_{\mathrm{par}} \approx \lambda(1-R)}
+\]
+
+\textbf{Connection to bond spreads.}
+
+From Exercise 1, a defaultable bond is effectively discounted at rate
+
+\[
+r+\lambda(1-R)
+\]
+
+Thus the credit spread above the risk-free rate is also
+
+\[
+\lambda(1-R)
+\]
+
+This explains why CDS spreads and bond yield spreads are closely related, and why the theoretical CDS-bond basis is approximately zero.
+
+\textbf{Why rates and maturity largely cancel out.}
+
+Both the premium leg and protection leg contain the same risky discount factor term:
+
+\[
+B(0,s)
+\]
+
+Since this term appears in both numerator and denominator of the CDS par spread formula, it largely cancels. As a result, the CDS spread mainly reflects credit risk through default intensity $\lambda$ and recovery rate $R$.
+
+\newpage
+
+%==================================================
+
+\section{Exercise 3}
+
+\textbf{Consider a situation where only three ratings exist: $G$ (good), $B$ (bad), and $D$ (default).} Suppose the quarterly credit-rating migration is described by a homogeneous Markov chain with transition matrix
+
+\[
+M\left(\frac14\right)
+=
+\begin{array}{c|ccc}
+ & G & B & D \\
+\hline
+G & ? & 8\% & 3\% \\
+B & ? & 90\% & 4\% \\
+D & ? & ? & ?
+\end{array}
+\]
+
+\textbf{Question:}
+\begin{itemize}
+    \item[(a)] Infer the missing values, assuming no credit singularities of any kind.
+    \item[(b)] What is the transition matrix for a half-year interval, $M(1/2)$?
+    \item[(c)] What is the probability of default in $1/2$ year, if one starts from good rating?
+\end{itemize}
+
+\vspace{4pt}
+
+\textbf{Solution:}
+
+\textbf{(a) Missing values}
+
+Each row of a transition matrix must sum to $1$. Also, default is an absorbing state, so once the firm is in $D$, it remains in $D$.
+
+\[
+P_{GG}=1-8\%-3\%=89\%.
+\]
+
+\[
+P_{BG}=1-90\%-4\%=6\%.
+\]
+
+\[
+P_{DG}=0, \qquad P_{DB}=0, \qquad P_{DD}=100\%.
+\]
+
+Thus,
+
+\[
+\boxed{
+M\left(\frac14\right)
+=
+\begin{pmatrix}
+0.89 & 0.08 & 0.03 \\
+0.06 & 0.90 & 0.04 \\
+0 & 0 & 1
+\end{pmatrix}
+}
+\]
+
+\textbf{(b) Half-year transition matrix}
+
+A half-year is two quarters, so by the Markov property,
+
+\[
+M\left(\frac12\right)
+=
+M\left(\frac14\right)^2.
+\]
+
+Therefore,
+
+\begin{align*}
+M\left(\frac12\right)
+&=
+\begin{pmatrix}
+0.89 & 0.08 & 0.03 \\
+0.06 & 0.90 & 0.04 \\
+0 & 0 & 1
+\end{pmatrix}
+\begin{pmatrix}
+0.89 & 0.08 & 0.03 \\
+0.06 & 0.90 & 0.04 \\
+0 & 0 & 1
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+0.7969 & 0.1432 & 0.0599 \\
+0.1074 & 0.8148 & 0.0778 \\
+0 & 0 & 1
+\end{pmatrix}.
+\end{align*}
+
+\[
+\boxed{
+M\left(\frac12\right)
+=
+\begin{pmatrix}
+79.69\% & 14.32\% & 5.99\% \\
+10.74\% & 81.48\% & 7.78\% \\
+0\% & 0\% & 100\%
+\end{pmatrix}
+}
+\]
+
+\textbf{(c) Default probability over half a year from good rating}
+
+Starting from good rating $G$, the half-year default probability is the $(G,D)$ entry of $M(1/2)$:
+
+\[
+\boxed{P_{GD}\left(\frac12\right)=0.0599=5.99\%.}
+\]
+
+\end{document}
